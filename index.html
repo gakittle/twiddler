@@ -18,6 +18,9 @@
           var $tweet = $('<div></div>');
           $tweet.text('@' + tweet.user + ': ' + tweet.message);
           $tweet.appendTo($body);
+          var $timestamp = $('<div></div>');
+          $timestamp.text(tweet.created_at);
+          $timestamp.appendTo($body);
           index -= 1;
         }
 
@@ -28,6 +31,9 @@
               var $tweet = $('<div></div>');
               $tweet.text('@' + tweet.user + ': ' + tweet.message);
               $tweet.appendTo($body);
+              var $timestamp = $('<div></div>');
+              $timestamp.text(tweet.created_at);
+              $timestamp.appendTo($body);
             }
             tweetTotal = streams.home.length;
           }
