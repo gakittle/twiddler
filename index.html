@@ -11,18 +11,26 @@
         var $body = $('body');
         // $body.html('');
 
+        // Addition of tweet to page
+        var timestamp = function(tweet) {
+          var $timestamp = $('<div></div>');
+          var timeShort = tweet.created_at.toString().slice(0, 21);
+          $timestamp.text(timeShort);
+          $timestamp.appendTo($body);
+        };
+
         var postTweet = function(tweet) {
           var $tweet = $('<div class = \'tweet-generic\'></div>');
-          var $userLink = $('<a class = \'user-link\'></a>');
+          var $userLink = $('<a class = \'user-link\' tweet.user></a>');
+          $userLink.addClass(tweet.user);
           $userLink.text('@' + tweet.user);
           $userLink.appendTo($body);
           $tweet.text(': ' + tweet.message);
           $tweet.appendTo($body);
-          var $timestamp = $('<div></div>');
-          $timestamp.text(tweet.created_at);
-          $timestamp.appendTo($body);
+          timestamp(tweet);
         }
 
+        // Generate first 10 tweets
         var index = streams.home.length - 1;
         var tweetTotal = streams.home.length;
         while(index >= 0){
@@ -31,6 +39,7 @@
           index -= 1;
         }
 
+        // Get new tweets upon button click
         var getNewTweets = function () {
           if (streams.home.length > tweetTotal) {
             for (var j = 0; j < streams.home.length - tweetTotal; j++) {
@@ -41,6 +50,27 @@
           }
         };
         $('button').click(getNewTweets);
+
+        // Show all tweets from one user
+        var showUserTweets = function (username) {
+          var usersTweets = streams.users[username];
+          usersTweets.forEach(function (userTweet) {
+            postTweet(userTweet);
+          });
+        }
+
+        $('.shawndrost').click(function() {
+          showUserTweets('shawndrost');
+        });
+        $('.sharksforcheap').click(function() {
+          showUserTweets('sharksforcheap');
+        });
+        $('.mracus').click(function() {
+          showUserTweets('mracus');
+        });
+        $('.douglascalhoun').click(function() {
+          showUserTweets('douglascalhoun');
+        });
 
       });
 
