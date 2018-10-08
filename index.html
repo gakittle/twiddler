@@ -24,11 +24,12 @@
         var getNewTweets = function () {
           if (streams.home.length > tweetTotal) {
             for (var j = 0; j < streams.home.length - tweetTotal; j++) {
-              var tweet = streams.home[j];
+              var tweet = streams.home[tweetTotal + j];
               var $tweet = $('<div></div>');
               $tweet.text('@' + tweet.user + ': ' + tweet.message);
               $tweet.appendTo($body);
             }
+            tweetTotal = streams.home.length;
           }
         };
         $('button').click(getNewTweets);
