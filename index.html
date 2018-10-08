@@ -11,29 +11,31 @@
         var $body = $('body');
         // $body.html('');
 
-        var index = streams.home.length - 1;
-        var tweetTotal = streams.home.length;
-        while(index >= 0){
-          var tweet = streams.home[index];
-          var $tweet = $('<div></div>');
-          $tweet.text('@' + tweet.user + ': ' + tweet.message);
+        var postTweet = function(tweet) {
+          var $tweet = $('<div class = \'tweet-generic\'></div>');
+          var $userLink = $('<a class = \'user-link\'></a>');
+          $userLink.text('@' + tweet.user);
+          $userLink.appendTo($body);
+          $tweet.text(': ' + tweet.message);
           $tweet.appendTo($body);
           var $timestamp = $('<div></div>');
           $timestamp.text(tweet.created_at);
           $timestamp.appendTo($body);
+        }
+
+        var index = streams.home.length - 1;
+        var tweetTotal = streams.home.length;
+        while(index >= 0){
+          var newMessage = streams.home[index];
+          postTweet(newMessage);
           index -= 1;
         }
 
         var getNewTweets = function () {
           if (streams.home.length > tweetTotal) {
             for (var j = 0; j < streams.home.length - tweetTotal; j++) {
-              var tweet = streams.home[tweetTotal + j];
-              var $tweet = $('<div></div>');
-              $tweet.text('@' + tweet.user + ': ' + tweet.message);
-              $tweet.appendTo($body);
-              var $timestamp = $('<div></div>');
-              $timestamp.text(tweet.created_at);
-              $timestamp.appendTo($body);
+              var newMessage = streams.home[tweetTotal + j];
+              postTweet(newMessage);
             }
             tweetTotal = streams.home.length;
           }
@@ -52,8 +54,11 @@
       .btn {
         background: yellow;
       }
-      .btn:click {
-
+      .user-link {
+        color: blue;
+      }
+      .tweet-generic {
+        display: inline;
       }
     </style>
 
