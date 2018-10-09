@@ -1,9 +1,13 @@
 <!DOCTYPE html>
 <html>
+
   <head>
+    <meta charset="utf-8">
+    <title>Warbler</title>
     <script src="jquery.js"></script>
     <script src="data_generator.js"></script>
   </head>
+
   <body>
     <script>
 
@@ -13,19 +17,19 @@
 
         // Addition of tweet to page
         var timestamp = function(tweet) {
-          var $timestamp = $('<div></div>');
+          var $timestamp = $('<div class = \'home-container\'></div>');
           var timeShort = tweet.created_at.toString().slice(0, 21);
           $timestamp.text(timeShort);
           $timestamp.appendTo($body);
         };
 
         var postTweet = function(tweet) {
-          var $tweet = $('<div class = \'tweet-generic\'></div>');
-          var $userLink = $('<a class = \'user-link\' tweet.user></a>');
+          var $tweet = $('<div class = \'tweet-generic home-container\'></div>');
+          var $userLink = $('<a class = \'user-link home-container\' tweet.user></a>');
           $userLink.addClass(tweet.user);
-          $userLink.text('@' + tweet.user);
+          $userLink.text('@' + tweet.user + ':');
           $userLink.appendTo($body);
-          $tweet.text(': ' + tweet.message);
+          $tweet.text(tweet.message);
           $tweet.appendTo($body);
           timestamp(tweet);
         }
@@ -72,24 +76,141 @@
           showUserTweets('douglascalhoun');
         });
 
+        // $('body').css('background-color', #dfdce3);
+
       });
 
     </script>
 
-    <section>
-      <button type = 'button' class = 'btn'>Show New Warbs</button>
+    <header class = 'home-container'>
+      <h1><a href = 'index.html' class = 'logo'>Welcome to Warbler</a>
+      </h1>
+      <h3>Tired of Twitter? Why not Warbler!</h3>
+    </header>
+
+    <section class = 'home-container'>
+      <p>See what your friends are twiddling, trilling, watching, and warbling about!</p>
     </section>
 
+    <footer>
+      <button type = 'button' class = 'btn btn-alt home-container'>Show New Warbles</button>
+    </footer>
+
     <style>
+
+      /* http://meyerweb.com/eric/tools/css/reset/ 2. v2.0 | 20110126
+        License: none (public domain)
+      */
+
+      html, body, div, span, applet, object, iframe,
+      h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+      a, abbr, acronym, address, big, cite, code,
+      del, dfn, em, img, ins, kbd, q, s, samp,
+      small, strike, strong, sub, sup, tt, var,
+      b, u, i, center,
+      dl, dt, dd, ol, ul, li,
+      fieldset, form, label, legend,
+      table, caption, tbody, tfoot, thead, tr, th, td,
+      article, aside, canvas, details, embed,
+      figure, figcaption, footer, header, hgroup,
+      menu, nav, output, ruby, section, summary,
+      time, mark, audio, video {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        font-size: 100%;
+        font: inherit;
+        vertical-align: baseline;
+      }
+      /* HTML5 display-role reset for older browsers */
+      article, aside, details, figcaption, figure,
+      footer, header, hgroup, menu, nav, section {
+        display: block;
+      }
+      body {
+        line-height: 1;
+      }
+      ol, ul {
+        list-style: none;
+      }
+      blockquote, q {
+        quotes: none;
+      }
+      blockquote:before, blockquote:after,
+      q:before, q:after {
+        content: '';
+        content: none;
+      }
+      table {
+        border-collapse: collapse;
+        border-spacing: 0;
+      }
+
+      /*
+        ========================================
+        Grid
+        ========================================
+      */
+
+      *,
+      *:before,
+      *:after {
+        -webkit-box-sizing: border-box;
+           -moz-box-sizing: border-box;
+                box-sizing: border-box;
+      }
+
+      .home-container {
+        margin: 0 auto;
+        padding-left: 30px;
+        padding-right: 30px;
+        width: 960px;
+      }
+
+      /*
+        ========================================
+        Typography
+        ========================================
+      */
+
+      h1, h3, p {
+        margin-bottom: 22px;
+      }
+
+
+
       .btn {
-        background: yellow;
+        border-radius: 5px;
+        margin: 10px 30px;
+        justify-content: flex-end;
+        background: #f7b733;
+        justify-content: flex-end;
       }
+
+      .btn-alt {
+        max-width: 140px;
+        max-height: 66 px;
+        border: 1px solid #dfe2e5;
+        padding: 10px 30px;
+      }
+
       .user-link {
-        color: blue;
+        display: inline-block;
+        color: #fc4a1a;
       }
+
       .tweet-generic {
-        display: inline;
+        display: inline-block;
+        /*justify-content: center;*/
       }
+
+      .logo {
+        font: strong;
+        color: #4abdac;
+        float: left;
+        margin: 20px 40px;
+      }
+
     </style>
 
   </body>
