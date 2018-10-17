@@ -11,13 +11,14 @@
   <body>
     <script>
 
-      $(document).ready(function(){
+      $(document).ready(function() {
         var $body = $('body');
         // $body.html('');
 
         // Addition of tweet to page
-        var timestamp = function(tweet) {
+        var timestamp = function(tweet, username) {
           var $timestamp = $('<div class = \'home-container\'></div>');
+          $timestamp.addClass(username);
           var timeShort = tweet.created_at.toString().slice(0, 21);
           $timestamp.text(timeShort);
           $timestamp.appendTo($body);
@@ -25,13 +26,14 @@
 
         var postTweet = function(tweet) {
           var $tweet = $('<div class = \'tweet-generic home-container\'></div>');
-          var $userLink = $('<a class = \'user-link home-container\' tweet.user></a>');
+          var $userLink = $('<a class = \'user-link home-container\'></a>');
+          $tweet.addClass(tweet.user);
           $userLink.addClass(tweet.user);
           $userLink.text('@' + tweet.user + ':');
           $userLink.appendTo($body);
           $tweet.text(tweet.message);
           $tweet.appendTo($body);
-          timestamp(tweet);
+          timestamp(tweet, tweet.user);
         }
 
         // Generate first 10 tweets
@@ -42,58 +44,91 @@
           postTweet(newMessage);
           index -= 1;
         }
-
-        // Get new tweets upon button click
-        var getNewTweets = function () {
-          if (streams.home.length > tweetTotal) {
-            for (var j = 0; j < streams.home.length - tweetTotal; j++) {
-              var newMessage = streams.home[tweetTotal + j];
-              postTweet(newMessage);
-            }
-            tweetTotal = streams.home.length;
-          }
-        };
-        $('button').click(getNewTweets);
-
         // Show all tweets from one user
         var showUserTweets = function (username) {
           var usersTweets = streams.users[username];
           usersTweets.forEach(function (userTweet) {
-            postTweet(userTweet);
+            postTweet(userTweet, true);
           });
         }
 
-        $('.shawndrost').click(function() {
-          showUserTweets('shawndrost');
-        });
-        $('.sharksforcheap').click(function() {
-          showUserTweets('sharksforcheap');
-        });
-        $('.mracus').click(function() {
-          showUserTweets('mracus');
-        });
-        $('.douglascalhoun').click(function() {
-          showUserTweets('douglascalhoun');
+        // Get new tweets upon button click
+        var getNewTweets = function () {
+          users.forEach(function(el) {
+            var otherUsers = document.getElementsByClassName(el);
+            while (otherUsers[0]) {
+              otherUsers[0].parentNode.removeChild(otherUsers[0]);
+            }
+          });
+
+          for (var i = 0; i < streams.home.length; i++) {
+            postTweet(streams.home[i]);
+          }
+        };
+
+        $('button').on('click', getNewTweets);
+
+        // Filter tweets by username
+        $(document.body).on('click', '.shawndrost', function() {
+          users.forEach(function(el) {
+            if (el !== 'shawndrost') {
+              var otherUsers = document.getElementsByClassName(el);
+              while (otherUsers[0]) {
+                otherUsers[0].parentNode.removeChild(otherUsers[0]);
+              }
+            }
+          });
         });
 
-        // $('body').css('background-color', #dfdce3);
+        $(document.body).on('click', '.mracus', function() {
+          users.forEach(function(el) {
+            if (el !== 'mracus') {
+              var otherUsers = document.getElementsByClassName(el);
+              while (otherUsers[0]) {
+                otherUsers[0].parentNode.removeChild(otherUsers[0]);
+              }
+            }
+          });
+        });
+
+        $(document.body).on('click', '.sharksforcheap', function() {
+          users.forEach(function(el) {
+            if (el !== 'sharksforcheap') {
+              var otherUsers = document.getElementsByClassName(el);
+              while (otherUsers[0]) {
+                otherUsers[0].parentNode.removeChild(otherUsers[0]);
+              }
+            }
+          });
+        });
+
+        $(document.body).on('click', '.douglascalhoun', function() {
+          users.forEach(function(el) {
+            if (el !== 'douglascalhoun') {
+              var otherUsers = document.getElementsByClassName(el);
+              while (otherUsers[0]) {
+                otherUsers[0].parentNode.removeChild(otherUsers[0]);
+              }
+            }
+          });
+        });
 
       });
 
     </script>
 
-    <header class = 'home-container'>
+    <header class = 'home-container mast'>
       <h1><a href = 'index.html' class = 'logo'>Welcome to Warbler</a>
       </h1>
       <h3>Tired of Twitter? Why not Warbler!</h3>
     </header>
 
-    <section class = 'home-container'>
+    <section class = 'home-container mast'>
       <p>See what your friends are twiddling, trilling, watching, and warbling about!</p>
     </section>
 
     <footer>
-      <button type = 'button' class = 'btn btn-alt home-container'>Show New Warbles</button>
+      <button type = 'button' class = 'btn btn-alt home-container mast'>Show New Warbles</button>
     </footer>
 
     <style>
@@ -197,6 +232,11 @@
       .user-link {
         display: inline-block;
         color: #fc4a1a;
+        cursor: pointer;
+      }
+
+      .user-link:hover {
+        text-decoration: underline red;
       }
 
       .tweet-generic {
